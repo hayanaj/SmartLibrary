@@ -3,13 +3,10 @@ PLease do not delete any of the automatically generated folders .vscode, bin, li
 
 ## 📋 Smart Library System:
 
-Catalogue Architect: Build a BST to store book titles and authors indexed by ISBN. 
-2. Borrowing History: Implement a Stack to keep track of books checked out (Most 
-recent on top). 
-3. Record Finder: Implement a recursive Search function within the BST to find books 
-by ISBN. 
-4. ADT Designer: Create the Interface for the Library System to ensure "Information 
-Hiding." 
+1. Catalogue Architect: Build a BST to store book titles and authors indexed by ISBN.
+2.  Borrowing History: Implement a Stack to keep track of books checked out (Most recent on top).
+3. Record Finder: Implement a recursive Search function within the BST to find books by ISBN.
+4. ADT Designer: Create the Interface for the Library System to ensure "Information Hiding."
 5. Admin Logic: Handle the borrowing/returning process (removing from the catalogue 
 and pushing to the stack). 
 
@@ -154,7 +151,7 @@ Task: Drives the user's console interaction using an interactive terminal layout
 * A shared method to securely capture, clean, and validate user input while handling non-integer input exceptions gracefully.
 
 
-#### 📑 `Main` Class
+#### 📑 `Main` Class (App.java)
 
 * [ ] **`public static void main(String[] args)`**
 * Initializes the application by calling the system initialization logic and executing `MenuSystem`.
