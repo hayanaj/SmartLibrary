@@ -1,38 +1,38 @@
 public class SmartLibrary implements LibraryADT {
-    // Private core storage references to preserve internal structures [cite: 73, 74]
+    // Private core storage references to preserve internal structures
     private BookBST catalogue;
     private BorrowStack history;
 
     /**
-     * Admin-only access logic to insert a book into the catalog tree[cite: 15, 77].
+     * Admin-only access logic to insert a book into the catalog tree
      */
     @Override
     public void addBook(int isbn, String title, String author) {
-        // TODO: Call catalogue.insert() to add the book into the BST [cite: 77]
+        // TODO: Call catalogue.insert() to add the book into the BST
     }
 
     /**
-     * Searches the catalog tree and outputs the results or a "Not Found" error message[cite: 78, 80, 82].
+     * Searches the catalog tree and outputs the results or a "Not Found" error message
      */
     @Override
     public void searchBook(int isbn) {
-        // TODO: Call catalogue.search(), print details if found, otherwise show an empty/not found message [cite: 79, 80, 82]
+        // TODO: Call catalogue.search(), print details if found, otherwise show an empty/not found message
     }
 
     /**
-     * Checks borrowing rules and moves a record from the catalog to the history stack[cite: 11, 17, 83].
+     * Checks borrowing rules and moves a record from the catalog to the history stack
      */
     @Override
     public void borrowBook(int isbn) {
-        // TODO: Check borrow limit, find book in BST, push to stack if valid, handle catalog status [cite: 84, 85, 89]
+        // TODO: Check borrow limit, find book in BST, push to stack if valid, handle catalog status
     }
 
     /**
-     * Invokes the history stack rendering method[cite: 91, 92].
+     * Invokes the history stack rendering method
      */
     @Override
     public void viewLatestHistory() {
-        // TODO: Delegate task directly to history.show() [cite: 92]
+        // TODO: Delegate task directly to history.show()
     }
 
     /**
