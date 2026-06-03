@@ -83,7 +83,7 @@ public class MenuSystem {
         String password = sc.nextLine();
         
         DatabaseManager user = new DatabaseManager();
-        if (user.authenticateStudent(email, password) == true){
+        if (user.registerStudent(email, password)){
             System.out.println("Account created successfully!\n");
             runStudentMenu(sc);
         }else{
