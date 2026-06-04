@@ -1,4 +1,4 @@
-PLease do not delete any of the automatically generated folders .vscode, bin, lib, src, and the README.md
+Please do not delete any of the automatically generated folders .vscode, bin, lib, src, and the README.md
 ---
 
 ## 📋 Smart Library System:
@@ -23,18 +23,6 @@ The interface must provide a menu-driven experience including:
 
 #### 📑 `DatabaseManager` Class
 
-*Task: Manages the MySQL database connection and handles student registration and authentication.*
-
-* [ ] **`public Connection getConnection()`**
-* Establishes and returns a connection to your MySQL database.
-
-
-* [ ] **`public boolean registerStudent(String email, String password)`**
-* Validates if the email is a valid `siswamail` and inserts the new student credentials into the database.
-
-
-* [ ] **`public boolean authenticateStudent(String email, String password)`**
-* Verifies if the provided credentials exist and match records in the database.
 
 ---
 
