@@ -74,5 +74,38 @@ public class BookBST {
         System.out.print(node.toString());
         inOrderRecursive(node.right);
     }
+
+    public void delete(int isbn) {
+        root = deleteRec(root, isbn);
+    }
+
+    private Book deleteRec(Book r, int isbn) {
+        if (r == null) return null;
+
+        if (isbn < r.isbn) {
+            r.left = deleteRec(r.left, isbn);
+        } else if (isbn > r.isbn) {
+            r.right = deleteRec(r.right, isbn);
+        } else {
+            if (r.left == null) return r.right;
+            if (r.right == null) return r.left;
+
+            Book successor = minValue(r.right);
+            r.isbn = successor.isbn;
+            r.title = successor.title;
+            r.author = successor.author;
+
+            r.right = deleteRec(r.right, successor.isbn);
+        }
+        return r;
+    }
+
+    private Book minValue(Book r) {
+        Book current = r;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
     
 }
