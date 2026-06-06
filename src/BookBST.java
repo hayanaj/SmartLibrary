@@ -34,6 +34,45 @@ public class BookBST {
         return current;
     }
     
-    // The "Record Finder"  (Task 3) will add the 
-    // public search() method into this class here
+    /**
+     * Public search method to search for a book by its ISBN
+     */
+    public Book search(int isbn) {
+        return searching(root, isbn);
+    }
+
+    /**
+     * Recursive helper method that searches the tree with O(log n) efficiency
+     */
+    private Book searching(Book root, int isbn) {
+        if (root == null){
+            return false;
+        }
+        if (root.isbn == isbn){
+            return true;
+        }
+        if (root.isbn < isbn){
+            return searching(root.right, isbn);
+        }return searching(root.left, isbn);
+    }
+    
+    /**
+     * Performs an In-Order traversal to display the entire book catalog
+     * alphabetically or numerically by ISBN.
+     */
+    public void displayInOrder() {
+        inOrderRecursive(root);
+        System.out.println();
+    }
+
+    private void inOrderRecursive(Book node){
+        if(node == null){
+            return;
+        }
+
+        inOrderRecursive(node.left);
+        System.out.print(node.toString());
+        inOrderRecursive(node.right);
+    }
+    
 }
