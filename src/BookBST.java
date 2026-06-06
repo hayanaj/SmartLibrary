@@ -46,10 +46,10 @@ public class BookBST {
      */
     private Book searching(Book root, int isbn) {
         if (root == null){
-            return false;
+            return null;
         }
         if (root.isbn == isbn){
-            return true;
+            return root;
         }
         if (root.isbn < isbn){
             return searching(root.right, isbn);
