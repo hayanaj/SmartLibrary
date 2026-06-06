@@ -67,7 +67,7 @@ public class MenuSystem {
         DatabaseManager user = new DatabaseManager();
         if (user.authenticateStudent(email, password) == true){
             System.out.println("Login success!\n");
-            runStudentMenu(sc);
+            library.runMenu();
         }else{
             System.out.println("Access denied.\n");
         }
@@ -85,42 +85,10 @@ public class MenuSystem {
         DatabaseManager user = new DatabaseManager();
         if (user.registerStudent(email, password)){
             System.out.println("Account created successfully!\n");
-            runStudentMenu(sc);
+            library.runMenu();
         }else{
             System.out.println("Account creation failed.\n");
         }
-    }
-
-
-    /**
-     * Displays student-specific options (View Catalog, Search Book, Borrow Book, View History, Logout).
-     */
-    public void runStudentMenu(Scanner sc) {
-        System.out.println("Options:");
-        System.out.println("1. View Catalog");
-        System.out.println("2. Borrow Book");
-        System.out.println("3. View Borrow History");
-        System.out.println("0. Logout");
-        System.out.print("Enter choice: ");
-        int choice = getOption(sc);
-        
-        switch (choice) {
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 0:
-                
-                break;
-            default:
-                break;
-        }
-
     }
 
     /**
