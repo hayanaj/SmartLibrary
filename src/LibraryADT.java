@@ -198,9 +198,3 @@ class SmartLibrary implements LibraryADT {
         }
     }
 }
-
-public class Main {
-    public static void main(String[] args) {
-        new SmartLibrary().runMenu();
-    }
-}
