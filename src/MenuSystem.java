@@ -1,131 +1,195 @@
 import java.util.Scanner;
 
 public class MenuSystem {
-    private SmartLibrary library;
+    private final SmartLibrary library;
+    private final DatabaseManager databaseManager;
+    private final Scanner scanner;
+
+    public MenuSystem() {
+        this(new SmartLibrary(), new DatabaseManager(), new Scanner(System.in));
+    }
+
+    public MenuSystem(SmartLibrary library, DatabaseManager databaseManager) {
+        this(library, databaseManager, new Scanner(System.in));
+    }
+
+    MenuSystem(SmartLibrary library, DatabaseManager databaseManager, Scanner scanner) {
+        this.library = library;
+        this.databaseManager = databaseManager;
+        this.scanner = scanner;
+    }
 
     /**
      * Provides the initial console application entry point (Login, Sign-Up, Exit).
      */
     public void runMainMenu() {
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.println("Welcome to Universiti Malaya Library");
         boolean running = true;
-        while (running){
-            System.out.print("\nAre you a student? (Y/N) or type 'exit' to quit: " );
-            String choice = sc.nextLine().toUpperCase();
-            switch (choice) {
-                case ("Y"):
-                    runStudentAuth(sc);
+        while (running) {
+            System.out.println("\n=== Smart Library ===");
+            System.out.println("1. Student Login");
+            System.out.println("2. Student Sign-Up");
+            System.out.println("3. Admin Login");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+
+            switch (getOption(scanner)) {
+                case 1:
+                    loginStudent();
                     break;
-                case ("N"):
-                    runAdminMenu(sc);
+                case 2:
+                    registerStudent();
                     break;
-                case("EXIT"):
+                case 3:
+                    loginAdmin();
+                    break;
+                case 4:
                     running = false;
+                    System.out.println("Goodbye.");
                     break;
                 default:
-                    System.out.println("INVALID INPUT");;
+                    System.out.println("Please choose an option from 1 to 4.");
             }
         }
     }
 
-    private void runStudentAuth(Scanner sc) { //similar workflow as main menu, only for student authentication
-        boolean backToMain = false;
-        while (backToMain == false) {
-            System.out.println("Options:");
-            System.out.println("1. Login");
-            System.out.println("2. Register");
-            System.out.println("0. Exit");
-            System.out.print("Enter choice: ");
-            String choice = sc.nextLine().trim().toUpperCase();
-            switch (choice) {
-                case ("1"):
-                    studentLogin(sc);
+    /**
+     * Displays student-specific options (View Catalog, Search Book, Borrow Book, View History, Logout).
+     */
+    public void runStudentMenu() {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n=== Student Menu ===");
+            System.out.println("1. View Catalogue");
+            System.out.println("2. Search Book");
+            System.out.println("3. Borrow Book");
+            System.out.println("4. View Borrowing History");
+            System.out.println("5. Logout");
+            System.out.print("Choose an option: ");
+
+            switch (getOption(scanner)) {
+                case 1:
+                    library.displayCatalog();
                     break;
-                case ("2"):
-                    studentReg(sc);
+                case 2:
+                    library.searchBook(readIsbn());
                     break;
-                case("0"):
-                    backToMain = true;
+                case 3:
+                    library.borrowBook(readIsbn());
+                    break;
+                case 4:
+                    library.viewLatestHistory();
+                    break;
+                case 5:
+                    loggedIn = false;
                     break;
                 default:
-                    System.out.println("INVALID INPUT.");;
+                    System.out.println("Please choose an option from 1 to 5.");
             }
-        }
-    }
-        
-    /**
-     * Student login logic - link to the database manager
-     */
-    private void studentLogin(Scanner sc){
-        System.out.print("Enter your siswamail: ");
-        String email = sc.nextLine();
-        System.out.print("Enter your password: ");
-        String password = sc.nextLine();
-        
-        DatabaseManager user = new DatabaseManager();
-        if (user.authenticateStudent(email, password) == true){
-            System.out.println("Login success!\n");
-            library.runMenu();
-        }else{
-            System.out.println("Access denied.\n");
-        }
-    }
-    
-    /**
-     * Student new user registration logic - link to the database manager
-     */
-    private void studentReg(Scanner sc){
-        System.out.print("Enter your siswamail: ");
-        String email = sc.nextLine();
-        System.out.print("Enter your password: ");
-        String password = sc.nextLine();
-        
-        DatabaseManager user = new DatabaseManager();
-        if (user.registerStudent(email, password)){
-            System.out.println("Account created successfully!\n");
-            library.runMenu();
-        }else{
-            System.out.println("Account creation failed.\n");
         }
     }
 
     /**
      * Displays admin-specific options (Add Book to Catalog, Search Book, View Catalog, Logout).
      */
-    public void runAdminMenu(Scanner sc) {
-        System.out.println("Options:");
-        System.out.println("1. View Catalog");
-        System.out.println("2. Search Book");
-        System.out.println("3. Add Book to Catalog");
-        System.out.println("0. Logout");
-        System.out.print("Enter choice: ");
-        int choice = getOption(sc);
-        
-        switch (choice) {
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 0:
-                
-                break;
-            default:
-                break;
+    public void runAdminMenu() {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n=== Admin Menu ===");
+            System.out.println("1. Add Book to Catalogue");
+            System.out.println("2. Search Book");
+            System.out.println("3. View Catalogue");
+            System.out.println("4. Logout");
+            System.out.print("Choose an option: ");
+
+            switch (getOption(scanner)) {
+                case 1:
+                    int isbn = readIsbn();
+                    System.out.print("Title: ");
+                    String title = scanner.nextLine().trim();
+                    System.out.print("Author: ");
+                    String author = scanner.nextLine().trim();
+                    library.addBook(isbn, title, author);
+                    break;
+                case 2:
+                    library.searchBook(readIsbn());
+                    break;
+                case 3:
+                    library.displayCatalog();
+                    break;
+                case 4:
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("Please choose an option from 1 to 4.");
+            }
         }
     }
 
     private int getOption(Scanner sc) {
-        try {
-            return Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
-            return -1;
+        while (true) {
+            String input = sc.nextLine().trim();
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException exception) {
+                System.out.print("Please enter a whole number: ");
+            }
+        }
+    }
+
+    private int readIsbn() {
+        while (true) {
+            System.out.print("ISBN: ");
+            int isbn = getOption(scanner);
+            if (isbn > 0) {
+                return isbn;
+            }
+            System.out.println("ISBN must be a positive integer.");
+        }
+    }
+
+    private void loginStudent() {
+        System.out.print("Email: ");
+        String email = scanner.nextLine().trim();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        if (databaseManager.authenticateStudent(email, password)) {
+            System.out.println("Login successful.");
+            runStudentMenu();
+        } else {
+            System.out.println("Login failed. Check your credentials and database configuration.");
+        }
+    }
+
+    private void registerStudent() {
+        System.out.print("Email: ");
+        String email = scanner.nextLine().trim();
+        System.out.print("Password (at least 6 characters): ");
+        String password = scanner.nextLine();
+
+        if (databaseManager.registerStudent(email, password)) {
+            System.out.println("Registration successful.");
+        } else {
+            System.out.println("Registration failed. Use a valid email and check the database.");
+        }
+    }
+
+    private void loginAdmin() {
+        String expectedEmail = System.getenv().getOrDefault(
+                "SMART_LIBRARY_ADMIN_EMAIL", "admin@library.local");
+        String expectedPassword = System.getenv().getOrDefault(
+                "SMART_LIBRARY_ADMIN_PASSWORD", "admin123");
+
+        System.out.print("Admin email: ");
+        String email = scanner.nextLine().trim();
+        System.out.print("Admin password: ");
+        String password = scanner.nextLine();
+
+        if (expectedEmail.equalsIgnoreCase(email) && expectedPassword.equals(password)) {
+            System.out.println("Admin login successful.");
+            runAdminMenu();
+        } else {
+            System.out.println("Invalid admin credentials.");
         }
     }
 }
