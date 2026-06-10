@@ -1,23 +1,19 @@
 public class BookBST {
     // The root is private to ensure Information Hiding
     private Book root;
-
     public BookBST() {
         this.root = null;
     }
-
     // Public wrapper method - this is what the Admin Menu (Task 5) will call
     public void insert(int isbn, String title, String author) {
         root = insertRecursive(root, isbn, title, author);
     }
-
     // Private recursive method 
     private Book insertRecursive(Book current, int isbn, String title, String author) {
         // Base case: If we find an empty spot, put the new book here
         if (current == null) {
             return new Book(isbn, title, author);
         }
-
         // Recursive traversal: Decide whether to go left or right
         if (isbn < current.isbn) {
             // Smaller ISBNs go down the left branch
@@ -40,7 +36,6 @@ public class BookBST {
     public Book search(int isbn) {
         return searching(root, isbn);
     }
-
     /**
      * Recursive helper method that searches the tree with O(log n) efficiency
      */
@@ -53,7 +48,8 @@ public class BookBST {
         }
         if (root.isbn < isbn){
             return searching(root.right, isbn);
-        }return searching(root.left, isbn);
+        }
+        return searching(root.left, isbn);
     }
     
     /**
@@ -64,24 +60,28 @@ public class BookBST {
         inOrderRecursive(root);
         System.out.println();
     }
-
     private void inOrderRecursive(Book node){
         if(node == null){
             return;
         }
-
         inOrderRecursive(node.left);
         System.out.print(node.toString());
         inOrderRecursive(node.right);
     }
-
-    public void delete(int isbn) {
+    
+//////////OPTIMIZED//////////
+    // return deleted book, adapt borrow logic, store in history stack
+    public Book delete(int isbn) {
+        Book target = search(isbn);
+        if (target == null) {
+            return null;
+        }
         root = deleteRec(root, isbn);
+        return target;
     }
 
     private Book deleteRec(Book r, int isbn) {
         if (r == null) return null;
-
         if (isbn < r.isbn) {
             r.left = deleteRec(r.left, isbn);
         } else if (isbn > r.isbn) {
@@ -89,17 +89,14 @@ public class BookBST {
         } else {
             if (r.left == null) return r.right;
             if (r.right == null) return r.left;
-
             Book successor = minValue(r.right);
             r.isbn = successor.isbn;
             r.title = successor.title;
             r.author = successor.author;
-
             r.right = deleteRec(r.right, successor.isbn);
         }
         return r;
     }
-
     private Book minValue(Book r) {
         Book current = r;
         while (current.left != null) {
