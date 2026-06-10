@@ -1,14 +1,11 @@
 public class SmartLibrary implements LibraryADT {
-    private static final int MAX_BORROWED_BOOKS = 3;
-
+    /////////NO BORROW NUMBER LIMIT/////////
     private final BookBST catalogue;
     private final BorrowStack history;
-
     public SmartLibrary() {
         catalogue = new BookBST();
         history = new BorrowStack();
     }
-
     /**
      * Admin-only access logic to insert a book into the catalog tree[cite: 15, 77].
      */
@@ -23,11 +20,9 @@ public class SmartLibrary implements LibraryADT {
             System.out.println("A book with ISBN " + isbn + " already exists.");
             return;
         }
-
         catalogue.insert(isbn, title.trim(), author.trim());
         System.out.println("Book added: " + title.trim());
     }
-
     /**
      * Searches the catalog tree and outputs the results or a "Not Found" error message[cite: 78, 80, 82].
      */
@@ -40,28 +35,23 @@ public class SmartLibrary implements LibraryADT {
             System.out.println(book);
         }
     }
-
     /**
      * Checks borrowing rules and moves a record from the catalog to the history stack[cite: 11, 17, 83].
      */
     @Override
     public void borrowBook(int isbn) {
-        if (!checkBorrowLimit()) {
-            System.out.println("Borrowing limit reached. A student may borrow at most "
-                    + MAX_BORROWED_BOOKS + " books.");
-            return;
-        }
-
-        Book book = catalogue.remove(isbn);
+        
+    //////OPTIMIZED & DELETE//////
+        // no checkBorrowLimit
+        // remove → delete: unify method names
+        Book book = catalogue.delete(isbn);
         if (book == null) {
             System.out.println("Book not found or already borrowed.");
             return;
         }
-
         history.push(book);
         System.out.println("Borrowed: " + book.getTitle());
     }
-
     /**
      * Invokes the history stack rendering method[cite: 91, 92].
      */
@@ -69,7 +59,6 @@ public class SmartLibrary implements LibraryADT {
     public void viewLatestHistory() {
         history.show();
     }
-
     /**
      * Invokes the BST's In-Order traversal method to show available books to students.
      */
@@ -77,11 +66,7 @@ public class SmartLibrary implements LibraryADT {
     public void displayCatalog() {
         catalogue.displayInOrder();
     }
-
-    /**
-     * Evaluates if the student has reached their maximum allowed borrowed books before approving a new checkout.
-     */
-    private boolean checkBorrowLimit() {
-        return history.size() < MAX_BORROWED_BOOKS;
-    }
+    
+////////DELETE////////
+    //no checkBorrowLimit boolean method
 }
