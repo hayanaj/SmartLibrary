@@ -4,9 +4,7 @@ public class App {
     public static void main(String[] args) {
         SmartLibrary library = new SmartLibrary();
 
-        if (args.length > 0) {
-            loadInitialBooks(library, args[0]);
-        }
+        loadInitialBooks(library, "books.txt");
 
         MenuSystem menuSystem = new MenuSystem(library, new DatabaseManager());
         menuSystem.runMainMenu();
@@ -15,6 +13,7 @@ public class App {
     private static void loadInitialBooks(SmartLibrary library, String filePath) {
         try {
             List<Book> books = new FileHandler().loadBooksFromTxt(filePath);
+            
             for (Book book : books) {
                 library.addBook(book.getIsbn(), book.getTitle(), book.getAuthor());
             }
