@@ -1,6 +1,26 @@
+import java.util.List;
+
 public class App {
-    public static void main(String[] args) throws Exception {
-        MenuSystem UMLIbrary = new MenuSystem();
-        UMLIbrary.runMainMenu();
+    public static void main(String[] args) {
+        SmartLibrary library = new SmartLibrary();
+
+        if (args.length > 0) {
+            loadInitialBooks(library, args[0]);
+        }
+
+        MenuSystem menuSystem = new MenuSystem(library, new DatabaseManager());
+        menuSystem.runMainMenu();
+    }
+
+    private static void loadInitialBooks(SmartLibrary library, String filePath) {
+        try {
+            List<Book> books = new FileHandler().loadBooksFromTxt(filePath);
+            for (Book book : books) {
+                library.addBook(book.getIsbn(), book.getTitle(), book.getAuthor());
+            }
+            System.out.println("Loaded " + books.size() + " book(s) from " + filePath + ".");
+        } catch (RuntimeException exception) {
+            System.err.println("Could not load initial books: " + exception.getMessage());
+        }
     }
 }
