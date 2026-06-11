@@ -25,6 +25,7 @@ This system compiles into a platform-independent executable Java Archive (JAR) f
 For the executable application to load properly, the data storage stream files must sit in the same working directory as the executable engine. Ensure your folder contains:
 * `SmartLibrary.jar` (The compiled engine)
 * `books.txt` (The predefined inventory catalog containing the pipe-separated classic records)
+* `studentData.txt` (Stores login data for students)
 
 ### 💻 How to Run the JAR File via Terminal
 
@@ -33,3 +34,4 @@ For the executable application to load properly, the data storage stream files m
 3. **Navigate to the Directory:** Use the `cd` command to enter the specific directory containing your compiled executable JAR file and text resources:
    ```bash
    cd path/to/Your-Repository-Folder/executable
+4. **Run the jar file:** Use the `java -jar SmartLibrary.jar` command to run the file
