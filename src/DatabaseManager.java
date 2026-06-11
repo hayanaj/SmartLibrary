@@ -12,13 +12,31 @@ public class DatabaseManager {
      * Validates if the email is valid and inserts the new student credentials into the file.
      */
     public boolean registerStudent(String email, String password) {
-        if (!email.toLowerCase().endsWith("@siswa.um.edu.my")) {
-            System.out.println("Invalid address.");
+        
+        if (findUser(email, password)) {
+            System.out.println("This user is already registered.");
             return false;
         }
 
-        if (findUser(email, password)) {
-            System.out.println("This user is already registered.");
+        if (!email.toLowerCase().endsWith("@siswa.um.edu.my")) {
+                    System.out.println("Invalid siswamail address.");
+                    return false;
+                }
+
+        String matric = email.substring(0,email.lastIndexOf("@siswa.um.edu.my"));
+        
+        if(matric == null || matric.isEmpty()) return false;
+        else{
+            for (int i = 0; i < matric.length(); i++) {
+                if (!Character.isDigit(matric.charAt(i))) {
+                    System.out.println("Invalid student matric.");
+                    return false;
+                }
+            }
+        }
+
+        if (password == null || password.length() < 6) {
+            System.out.println("Password must be at least 6 characters long.");
             return false;
         }
 
@@ -27,7 +45,7 @@ public class DatabaseManager {
             writer.newLine();
             return true;
         } catch (IOException e) {
-            System.out.println(" Error writing data: " + e.getMessage());
+            System.out.println("Error writing data: " + e.getMessage());
             return false;
         }
     }

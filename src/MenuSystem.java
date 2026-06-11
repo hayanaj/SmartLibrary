@@ -157,11 +157,12 @@ public class MenuSystem {
             System.out.println("Login successful.");
             runStudentMenu();
         } else {
-            System.out.println("Login failed. Check your credentials and database configuration.");
+            System.out.println("Login failed. Check your credentials.");
         }
     }
 
     private void registerStudent() {
+        System.out.println("\n=== Student Registration Menu ===");
         System.out.print("Email: ");
         String email = scanner.nextLine().trim();
         System.out.print("Password (at least 6 characters): ");
@@ -170,7 +171,7 @@ public class MenuSystem {
         if (databaseManager.registerStudent(email, password)) {
             System.out.println("Registration successful.");
         } else {
-            System.out.println("Registration failed. Use a valid email and check the database.");
+            System.out.println("Registration failed.");
         }
     }
 
