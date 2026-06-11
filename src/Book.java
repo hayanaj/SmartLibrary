@@ -2,10 +2,36 @@ public class Book {
     int isbn;
     String title;
     String author;
+    
+    // Pointers to the left and right children in the tree
     Book left;
     Book right;
-
+    
+    // Constructor to initialize a new book
     public Book(int isbn, String title, String author) {
-        
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.left = null;
+        this.right = null;
+    }
+    
+    // add getter method: for external call
+    public int getIsbn() {
+        return isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    // rewrite toString: for console to print book information
+    @Override
+    public String toString() {
+        return String.format("ISBN: %d | Title: %s | Author: %s%n", isbn, title, author);
     }
 }
