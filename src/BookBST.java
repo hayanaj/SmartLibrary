@@ -1,14 +1,13 @@
 public class BookBST {
-    // The root is private to ensure Information Hiding
     private Book root;
     public BookBST() {
         this.root = null;
     }
-    // Public wrapper method - this is what the Admin Menu (Task 5) will call
+
     public void insert(int isbn, String title, String author) {
         root = insertRecursive(root, isbn, title, author);
     }
-    // Private recursive method 
+
     private Book insertRecursive(Book current, int isbn, String title, String author) {
         // Base case: If we find an empty spot, put the new book here
         if (current == null) {
@@ -25,7 +24,7 @@ public class BookBST {
             
         } else {
             // Handling duplicate ISBNs instead of failing silently
-            System.out.println("Warning: A book with ISBN " + isbn + " already exists in the catalogue. Insertion skipped.");
+            System.out.println("A book with ISBN " + isbn + " already exists in the catalogue.");
         }
         return current;
     }
@@ -69,15 +68,16 @@ public class BookBST {
         inOrderRecursive(node.right);
     }
     
-//////////OPTIMIZED//////////
     // return deleted book, adapt borrow logic, store in history stack
     public Book delete(int isbn) {
         Book target = search(isbn);
         if (target == null) {
             return null;
         }
+        Book borrowedCopy = new Book(target.isbn, target.title, target.author);
+        
         root = deleteRec(root, isbn);
-        return target;
+        return borrowedCopy;
     }
 
     private Book deleteRec(Book r, int isbn) {
@@ -97,6 +97,7 @@ public class BookBST {
         }
         return r;
     }
+
     private Book minValue(Book r) {
         Book current = r;
         while (current.left != null) {

@@ -3,8 +3,6 @@ public interface LibraryADT {
     void searchBook(int isbn);
     void borrowBook(int isbn);
     void viewLatestHistory();
-////////NEW////////
-    // add new interface method
     void displayCatalog();
 }
-////////ONLY RETAIN ADT METHOD////////
+

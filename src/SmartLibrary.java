@@ -1,5 +1,4 @@
 public class SmartLibrary implements LibraryADT {
-    /////////NO BORROW NUMBER LIMIT/////////
     private final BookBST catalogue;
     private final BorrowStack history;
     public SmartLibrary() {
@@ -24,7 +23,7 @@ public class SmartLibrary implements LibraryADT {
         System.out.println("Book added: " + title.trim());
     }
     /**
-     * Searches the catalog tree and outputs the results or a "Not Found" error message[cite: 78, 80, 82].
+     * Searches the catalog tree and outputs the results or a "Not Found" error message.
      */
     @Override
     public void searchBook(int isbn) {
@@ -36,24 +35,24 @@ public class SmartLibrary implements LibraryADT {
         }
     }
     /**
-     * Checks borrowing rules and moves a record from the catalog to the history stack[cite: 11, 17, 83].
+     * Checks borrowing rules and moves a record from the catalog to the history stack.
      */
     @Override
     public void borrowBook(int isbn) {
+        Book borrowedBook = catalogue.delete(isbn);
         
-    //////OPTIMIZED & DELETE//////
-        // no checkBorrowLimit
-        // remove → delete: unify method names
-        Book book = catalogue.delete(isbn);
-        if (book == null) {
-            System.out.println("Book not found or already borrowed.");
+        if (borrowedBook == null) {
+            System.out.println("Book not found.");
             return;
         }
-        history.push(book);
-        System.out.println("Borrowed: " + book.getTitle());
+        
+        history.push(borrowedBook);
+        
+        System.out.println("Borrowed " + borrowedBook.getTitle());
     }
+
     /**
-     * Invokes the history stack rendering method[cite: 91, 92].
+     * Invokes the history stack rendering method.
      */
     @Override
     public void viewLatestHistory() {
@@ -67,6 +66,4 @@ public class SmartLibrary implements LibraryADT {
         catalogue.displayInOrder();
     }
     
-////////DELETE////////
-    //no checkBorrowLimit boolean method
 }

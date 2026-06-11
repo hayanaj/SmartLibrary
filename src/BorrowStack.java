@@ -3,7 +3,6 @@ import java.util.Stack;
 public class BorrowStack {
     private Stack<Book> stack;
 
-    // Initialize object
     public BorrowStack(){
         stack = new Stack<>(); 
     }
@@ -37,4 +36,20 @@ public class BorrowStack {
             System.out.printf("ISBN: %d | Title: %s | Author: %s%n", b.isbn, b.title, b.author);
             }
         }
+    
+    /**
+     * Looks at the book at the top of the stack without removing it.
+     */
+    public Book peek() {
+        if (stack.isEmpty()) { 
+            return null;
+        }
+        
+        int topIndex = stack.size() - 1;
+        return stack.get(topIndex);
+    }
+
+    public boolean isEmpty() {
+        return stack.size() == 0;
+    }
 }

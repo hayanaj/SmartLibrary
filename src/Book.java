@@ -16,7 +16,6 @@ public class Book {
         this.right = null;
     }
     
-//////// NEW /////////
     // add getter method: for external call
     public int getIsbn() {
         return isbn;
