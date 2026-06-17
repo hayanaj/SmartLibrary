@@ -11,7 +11,6 @@ The interface must provide a menu-driven experience including:
 1. **Add Book:** Input ISBN, Title, and Author. 
 2. **Search Book:** Find details by ISBN ($O(\log n)$ efficiency). 
 3. **Borrow Book:** Move record to history stack. 
-4. **Return Book:** Verify and re-index a borrowed book back into the catalog.
 5. **View History:** Display all borrowed books (LIFO order). 
 6. **Exit:** Terminate the program.
 
