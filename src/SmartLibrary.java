@@ -6,7 +6,7 @@ public class SmartLibrary implements LibraryADT {
         history = new BorrowStack();
     }
     /**
-     * Admin-only access logic to insert a book into the catalog tree[cite: 15, 77].
+     * Admin-only access logic to insert a book into the catalog tree.
      */
     @Override
     public void addBook(int isbn, String title, String author) {
